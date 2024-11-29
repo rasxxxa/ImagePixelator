@@ -15,7 +15,7 @@ auto main(int args, char* arguments[]) -> int
 	std::string imagePath{};
 
 	std::cout << "Type root path: \n";
-	std::cin >> rootPath;
+	std::getline(std::cin, rootPath);
 
 	unsigned int imageSize{};
 	std::cout << "Type in image width and height" << std::endl;
