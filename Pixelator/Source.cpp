@@ -27,10 +27,18 @@ auto main(int args, char* arguments[]) -> int
 
 	std::vector<std::string> pathsPng;
 
+	const auto toLower = [](const std::string& pathString)
+		{
+			std::string copy = pathString;
+			std::ranges::for_each(copy, [](char& a) { a = std::tolower(a); });
+			return copy;
+		};
 	for (auto paths : std::filesystem::recursive_directory_iterator(rootPath))
 	{
-		const auto pathString = paths.path().string();
-		if (pathString.find(".png") != std::string::npos)
+		const auto pathString = toLower(paths.path().string());
+		if (pathString.find(".png") != std::string::npos 
+			|| pathString.find(".jpg") != std::string::npos 
+			|| pathString.find(".jpeg") != std::string::npos)
 		{
 			pathsPng.push_back(pathString);
 		}

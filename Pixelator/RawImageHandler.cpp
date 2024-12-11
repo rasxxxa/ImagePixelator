@@ -16,11 +16,19 @@
         copy[ch] = std::tolower(copy[ch]);
     }
 
-    if (std::equal(copy.end() - 4, copy.end(), ".png"))
+    if ((path.find(".png")) != std::string::npos)
     {
         type = ImageType::PNG;
     }
-    else if (std::equal(copy.end() - 4, copy.end(), ".jpg"))
+    else if ((path.find(".jpg")) != std::string::npos)
+    {
+        type = ImageType::JPG;
+    }
+    else if ((path.find(".JPG")) != std::string::npos)
+    {
+        type = ImageType::JPG;
+    }
+    else if ((path.find(".JPEG")) != std::string::npos)
     {
         type = ImageType::JPG;
     }
@@ -54,20 +62,7 @@ bool RawImageHandler::WriteImage(const Image& image, std::optional<std::string> 
 {
     static unsigned serial = 0;
     std::string withExt = path.value_or(image.path);
-    //withExt.insert(withExt.size() - 4, std::to_string(serial++).data());
-    switch (image.type)
-    {
-    case ImageType::PNG: {
-    
-        return stbi_write_png(withExt.data(), image.m_width, image.m_height, image.m_channels, image.m_imageData.data(), image.m_width * image.m_channels);
-    
-    }break;
-    case ImageType::JPG: {return true; }break;
-    case ImageType::BMP: {return true; }break;
-    default:
-        break;
-    }
-    return false;
+    return stbi_write_png(withExt.data(), image.m_width, image.m_height, image.m_channels, image.m_imageData.data(), image.m_width * image.m_channels);
 }
 
 std::pair<std::vector<unsigned char>, std::vector<unsigned char>> RawImageHandler::SeparateAlpha(Image& image)

@@ -8,15 +8,15 @@ namespace
 		auto it = maps.lower_bound(key);
 		auto pr = std::prev(it);
 
-		if (pr != maps.end())
+		if (pr != maps.end() && it != maps.end())
 		{
 			if (std::abs(static_cast<double>(pr->first - key)) < std::abs(static_cast<double>(it->first - key)))
 				return pr->second;
-			else
+			else if (it != maps.end())
 				return it->second;
 		}
 
-		return it->second;
+		return maps.begin()->second;
 	}
 
 	constexpr long long split(unsigned int a)
